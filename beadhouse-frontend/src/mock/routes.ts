@@ -46,17 +46,17 @@ const routes: IRoute[] = [
       icon: ''
     }
   },
-  // {
-  //   id: 4,
-  //   pid: 2,
-  //   path: 'intention',
-  //   name: 'IntentionSale',
-  //   component: 'sale/intention/index.vue',
-  //   meta: {
-  //     title: '意向客户',
-  //     icon: ''
-  //   }
-  // },
+  {
+    id: 4,
+    pid: 2,
+    path: 'intention',
+    name: 'IntentionSale',
+    component: 'sale/intention/index.vue',
+    meta: {
+      title: '意向客户',
+      icon: ''
+    }
+  },
   {
     id: 5,
     pid: 2,
@@ -180,17 +180,17 @@ const routes: IRoute[] = [
       icon: ''
     }
   },
-  // {
-  //   id: 16,
-  //   pid: 13,
-  //   path: 'activity',
-  //   name: 'ActivityPeople',
-  //   component: 'people/activity/activity.vue',
-  //   meta: {
-  //     title: '活动管理',
-  //     icon: ''
-  //   }
-  // },
+  {
+    id: 16,
+    pid: 13,
+    path: 'activity',
+    name: 'ActivityPeople',
+    component: 'people/activity/activity.vue',
+    meta: {
+      title: '活动管理',
+      icon: ''
+    }
+  },
   {
     id: 17,
     pid: 0,
@@ -236,73 +236,73 @@ const routes: IRoute[] = [
       icon: ''
     }
   },
-  // {
-  //   id: 21,
-  //   pid: 0,
-  //   path: '/resource',
-  //   name: 'Resource',
-  //   redirect: '/resource/info',
-  //   component: 'resource/index.vue',
-  //   meta: {
-  //     title: '物资管理',
-  //     icon: 'resource'
-  //   }
-  // },
-  // {
-  //   id: 22,
-  //   pid: 21,
-  //   path: 'info',
-  //   name: 'InfoResource',
-  //   component: 'resource/info/index.vue',
-  //   meta: {
-  //     title: '物资信息',
-  //     icon: ''
-  //   }
-  // },
-  // {
-  //   id: 23,
-  //   pid: 21,
-  //   path: 'Storage',
-  //   name: 'StorageResource',
-  //   component: 'resource/storage/index.vue',
-  //   meta: {
-  //     title: '仓库设置',
-  //     icon: ''
-  //   }
-  // },
-  // {
-  //   id: 24,
-  //   pid: 21,
-  //   path: 'enter',
-  //   name: 'EnterResource',
-  //   component: 'resource/enter/index.vue',
-  //   meta: {
-  //     title: '入库管理',
-  //     icon: ''
-  //   }
-  // },
-  // {
-  //   id: 25,
-  //   pid: 21,
-  //   path: 'leave',
-  //   name: 'LeaveResource',
-  //   component: 'resource/leave/index.vue',
-  //   meta: {
-  //     title: '出库管理',
-  //     icon: ''
-  //   }
-  // },
-  // {
-  //   id: 26,
-  //   pid: 21,
-  //   path: 'search',
-  //   name: 'SearchResource',
-  //   component: 'resource/search/index.vue',
-  //   meta: {
-  //     title: '库存查询',
-  //     icon: ''
-  //   }
-  // },
+  {
+    id: 21,
+    pid: 0,
+    path: '/resource',
+    name: 'Resource',
+    redirect: '/resource/info',
+    component: 'resource/index.vue',
+    meta: {
+      title: '物资管理',
+      icon: 'resource'
+    }
+  },
+  {
+    id: 22,
+    pid: 21,
+    path: 'info',
+    name: 'InfoResource',
+    component: 'resource/info/index.vue',
+    meta: {
+      title: '物资信息',
+      icon: ''
+    }
+  },
+  {
+    id: 23,
+    pid: 21,
+    path: 'storage',
+    name: 'StorageResource',
+    component: 'resource/storage/index.vue',
+    meta: {
+      title: '仓库设置',
+      icon: ''
+    }
+  },
+  {
+    id: 24,
+    pid: 21,
+    path: 'enter',
+    name: 'EnterResource',
+    component: 'resource/enter/index.vue',
+    meta: {
+      title: '入库管理',
+      icon: ''
+    }
+  },
+  {
+    id: 25,
+    pid: 21,
+    path: 'leave',
+    name: 'LeaveResource',
+    component: 'resource/leave/index.vue',
+    meta: {
+      title: '出库管理',
+      icon: ''
+    }
+  },
+  {
+    id: 26,
+    pid: 21,
+    path: 'search',
+    name: 'SearchResource',
+    component: 'resource/search/index.vue',
+    meta: {
+      title: '库存查询',
+      icon: ''
+    }
+  },
   {
     id: 27,
     pid: 0,
@@ -428,17 +428,17 @@ const routes: IRoute[] = [
       icon: ''
     }
   },
-  // {
-  //   id: 38,
-  //   pid: 36,
-  //   path: 'tag',
-  //   name: 'TagSaleBase',
-  //   component: 'base/sale/tag/index.vue',
-  //   meta: {
-  //     title: '客户标签',
-  //     icon: ''
-  //   }
-  // },
+  {
+    id: 38,
+    pid: 36,
+    path: 'tag',
+    name: 'TagSaleBase',
+    component: 'base/sale/tag/index.vue',
+    meta: {
+      title: '客户标签',
+      icon: ''
+    }
+  },
   {
     id: 39,
     pid: 35,
@@ -473,14 +473,14 @@ const routes: IRoute[] = [
       icon: ''
     }
   },
-  // {
-  //   id: 42,
-  //   pid: 35,
-  //   path: 'activity',
-  //   name: 'ActivityBase',
-  //   component: 'base/activity/index.vue',
-  //   meta: { title: '活动', icon: '' }
-  // }
+  {
+    id: 42,
+    pid: 35,
+    path: 'activity',
+    name: 'ActivityBase',
+    component: 'base/activity/index.vue',
+    meta: { title: '活动', icon: '' }
+  }
 ]
 
 export default routes

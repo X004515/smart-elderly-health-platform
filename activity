@@ -1,0 +1,10 @@
+beadhouse-frontend\src\views\error\404.vue:4:      <h1>404</h1>
+beadhouse-frontend\src\views\error\404.vue:31:    h1 {
+beadhouse-frontend\src\views\base\sale\tag\index.vue:3:    <h1>tag</h1>
+beadhouse-frontend\src\views\base\activity\index.vue:3:    <h1>activity</h1>
+beadhouse-frontend\src\views\resource\info\index.vue:3:    <h1>info</h1>
+beadhouse-frontend\src\views\resource\storage\index.vue:3:    <h1>storage</h1>
+beadhouse-frontend\src\views\resource\enter\index.vue:3:    <h1>enter</h1>
+beadhouse-frontend\src\views\resource\search\index.vue:3:    <h1>search</h1>
+beadhouse-frontend\src\views\people\activity\activity.vue:3:    <h1>activity</h1>
+beadhouse-frontend\src\views\resource\leave\index.vue:3:    <h1>leave</h1>

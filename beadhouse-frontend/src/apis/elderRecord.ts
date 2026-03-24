@@ -12,6 +12,16 @@ interface IGetElderById {
   elderId: string;
 }
 
+interface IRecommendActiveByElder {
+  elderId: number | string;
+  topN?: number;
+}
+
+interface IEditElderLabel {
+  elderId: number | string;
+  labelIdList: Array<number | string>;
+}
+
 interface IEditElder {
   id: number;
   name: string;
@@ -63,14 +73,46 @@ export async function getElderRecordById(data: IGetElderById) {
   });
 }
 
+// 根据编号获取长者标签
+export async function getElderLabelById(data: IGetElderById) {
+  return http.get("/api/elderRecord/getElderLabelById", {
+    params: {
+      ...data
+    }
+  });
+}
+
+// 根据编号获取可编辑长者标签
+export async function getEditElderLabelById(data: IGetElderById) {
+  return http.get("/api/elderRecord/getEditElderLabelById", {
+    params: {
+      ...data
+    }
+  });
+}
+
 // 编辑长者
 export function editElder(data: IEditElder) {
   return http.put("/api/elderRecord/editElder", data);
 }
 
+// 编辑长者标签
+export function editElderLabel(data: IEditElderLabel) {
+  return http.put("/api/elderRecord/editElderLabel", data);
+}
+
 // 删除长者
 export async function deleteElder(data: IGetElderById) {
   return http.delete("/api/elderRecord/deleteElder", {
+    params: {
+      ...data
+    }
+  });
+}
+
+// 根据老人推荐活动
+export async function recommendActiveByElder(data: IRecommendActiveByElder) {
+  return http.get("/api/elderRecord/recommendActiveByElder", {
     params: {
       ...data
     }

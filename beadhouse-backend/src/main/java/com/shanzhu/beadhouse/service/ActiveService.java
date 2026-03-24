@@ -60,4 +60,13 @@ public interface ActiveService {
      * @return
      */
     Result deleteActive(Long activeId);
+
+    /**
+     * 根据老人信息推荐活动
+     *
+     * @param elderId
+     * @param topN
+     * @return
+     */
+    Result recommendActiveByElder(Long elderId, Integer topN);
 }

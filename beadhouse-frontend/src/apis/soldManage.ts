@@ -198,7 +198,7 @@ export function getIntentById(data: any) {
 
 //客户标签
 export function listLabel(data: any) {
-  return http.get('/intention/listLabel', {
+  return http.get('/api/intention/listLabel', {
     params: {
       ...data
     }
@@ -207,7 +207,7 @@ export function listLabel(data: any) {
 
 // 分页查询沟通记录
 export function pageCommunicationRecord(data: any) {
-  return http.get('/intention/pageCommunicationRecord', {
+  return http.get('/api/intention/pageCommunicationRecord', {
     params: {
       ...data
     }
@@ -216,7 +216,7 @@ export function pageCommunicationRecord(data: any) {
 
 // 分页搜索老人
 export function pageSearchElderByKey(data: any) {
-  return http.get('/intention/pageSearchElderByKey', {
+  return http.get('/api/intention/pageSearchElderByKey', {
     params: {
       ...data
     }
@@ -225,7 +225,7 @@ export function pageSearchElderByKey(data: any) {
 
 // 分页查询回访计划
 export function pageVisitPlan(data: any) {
-  return http.get('/intention/pageVisitPlan', {
+  return http.get('/api/intention/pageVisitPlan', {
     params: {
       ...data
     }

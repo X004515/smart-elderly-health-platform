@@ -2,8 +2,10 @@ package com.shanzhu.beadhouse.controller;
 
 import com.shanzhu.beadhouse.common.constant.Constant;
 import com.shanzhu.beadhouse.entity.base.Result;
+import com.shanzhu.beadhouse.entity.query.EditElderLabelQuery;
 import com.shanzhu.beadhouse.entity.query.OperateIntentionQuery;
 import com.shanzhu.beadhouse.entity.query.PageElderByKeyQuery;
+import com.shanzhu.beadhouse.service.ActiveService;
 import com.shanzhu.beadhouse.service.CheckContractService;
 import com.shanzhu.beadhouse.service.ElderRecordService;
 import com.shanzhu.beadhouse.service.IntentionService;
@@ -27,6 +29,8 @@ public class ElderRecordController {
     private IntentionService intentionService;
     @Resource
     private CheckContractService checkContractService;
+    @Resource
+    private ActiveService activeService;
 
     @GetMapping("/exportExcel")
     @ApiOperation(value = "导出excel", notes = Constant.DEVELOPER + Constant.EMPEROR_WEN)
@@ -55,6 +59,27 @@ public class ElderRecordController {
         return intentionService.getIntentById(elderId);
     }
 
+    @GetMapping("/getElderLabelById")
+    @ApiOperation(value = "根据编号获取长者标签", notes = Constant.DEVELOPER + Constant.EMPEROR_WEN)
+    public Result getElderLabelById(@ApiParam(value = "根据编号获取长者标签请求参数", required = true) @RequestParam Long elderId,
+                                    @ApiParam(value = "接口访问请求头", required = true) @RequestHeader String token) {
+        return intentionService.getElderLabelById(elderId);
+    }
+
+    @GetMapping("/getEditElderLabelById")
+    @ApiOperation(value = "根据编号获取编辑长者标签", notes = Constant.DEVELOPER + Constant.EMPEROR_WEN)
+    public Result getEditElderLabelById(@ApiParam(value = "根据编号获取编辑长者标签请求参数", required = true) @RequestParam Long elderId,
+                                        @ApiParam(value = "接口访问请求头", required = true) @RequestHeader String token) {
+        return intentionService.getEditElderLabelById(elderId);
+    }
+
+    @PutMapping("/editElderLabel")
+    @ApiOperation(value = "编辑长者标签", notes = Constant.DEVELOPER + Constant.EMPEROR_WEN)
+    public Result editElderLabel(@ApiParam(value = "编辑长者标签请求实体", required = true) @RequestBody EditElderLabelQuery editElderLabelQuery,
+                                 @ApiParam(value = "接口访问请求头", required = true) @RequestHeader String token) {
+        return intentionService.editElderLabel(editElderLabelQuery);
+    }
+
     @PutMapping("/editElder")
     @ApiOperation(value = "编辑长者", notes = Constant.DEVELOPER + Constant.EMPEROR_WEN)
     public Result editElder(@ApiParam(value = "编辑长者请求实体", required = true) @RequestBody OperateIntentionQuery operateIntentionQuery,
@@ -67,5 +92,13 @@ public class ElderRecordController {
     public Result deleteCheckContract(@ApiParam(value = "删除长者请求参数", required = true) @RequestParam Long elderId,
                                       @ApiParam(value = "接口访问请求头", required = true) @RequestHeader String token) {
         return checkContractService.deleteCheckContract(elderId);
+    }
+
+    @GetMapping("/recommendActiveByElder")
+    @ApiOperation(value = "根据老人推荐活动", notes = Constant.DEVELOPER + Constant.EMPEROR_WEN)
+    public Result recommendActiveByElder(@ApiParam(value = "老人编号", required = true) @RequestParam Long elderId,
+                                         @ApiParam(value = "推荐数量", required = false) @RequestParam(required = false) Integer topN,
+                                         @ApiParam(value = "接口访问请求头", required = true) @RequestHeader String token) {
+        return activeService.recommendActiveByElder(elderId, topN);
     }
 }

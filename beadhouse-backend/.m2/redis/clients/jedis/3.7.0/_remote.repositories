@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Mar 24 15:17:00 CST 2026
+jedis-3.7.0.jar>al-maven=
+jedis-3.7.0.pom>al-maven=
