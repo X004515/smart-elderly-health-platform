@@ -27,6 +27,15 @@ public class AuthorityAssert {
         return getLoginUserInfo().getId();
     }
 
+    public Long getLoginTenantId() {
+        return getLoginUserInfo().getTenantId();
+    }
+
+    public Boolean isPlatformAdmin() {
+        LoginUserVo loginUserInfo = getLoginUserInfo();
+        return loginUserInfo != null && Boolean.TRUE.equals(loginUserInfo.getPlatformAdmin());
+    }
+
     public Boolean hasAuthority(String authority) {
         // 获取当前用户的权限
         List<String> authList = getLoginUserInfo().getAuthUrlList();

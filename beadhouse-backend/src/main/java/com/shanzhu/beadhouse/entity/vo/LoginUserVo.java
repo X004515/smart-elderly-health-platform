@@ -25,8 +25,13 @@ public class LoginUserVo {
     @ApiModelProperty(value = "权限id列表", example = "{}")
     private List<Long> authIdList;
     @ApiModelProperty(value = "权限url列表", example = "{}")
-    @JsonIgnore
     private List<String> authUrlList;
     @ApiModelProperty(value = "token", example = "null")
     private String token;
+    @ApiModelProperty(value = "租户id", example = "1")
+    private Long tenantId;
+    @ApiModelProperty(value = "租户编码", example = "default")
+    private String tenantCode;
+    @ApiModelProperty(value = "是否平台管理员", example = "false")
+    private Boolean platformAdmin;
 }

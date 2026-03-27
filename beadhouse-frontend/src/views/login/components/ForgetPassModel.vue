@@ -11,6 +11,14 @@
           :rules="forgetPassRules"
           size="large"
         >
+          <el-form-item prop="tenantCode">
+            <el-input
+              v-model="formData.tenantCode"
+              placeholder="租户编码"
+              :prefix-icon="useRenderIcon('user', { size: 12 })"
+              clearable
+            />
+          </el-form-item>
           <el-form-item prop="phone">
             <el-input
               v-model="formData.phone"
@@ -101,6 +109,7 @@ import { forgetPass, sendCode } from '@/apis/user'
 
 const ruleFormRef = ref<FormInstance | null>(null)
 const formData = ref({
+  tenantCode: 'default',
   phone: '13547584400',
   password: '123456',
   confirmPassword: '123456',
@@ -124,6 +133,7 @@ const sendCodeHandle = async () => {
   }
   // 发送验证码
   const res: any = await sendCode({
+    tenantCode: formData.value.tenantCode,
     account: formData.value.phone,
     pass: formData.value.password
   })
@@ -160,6 +170,7 @@ const handleForgetPass = (formRef: FormInstance | null) => {
   formRef.validate(async (valid, fields) => {
     if (valid) {
       const res: any = await forgetPass({
+        tenantCode: formData.value.tenantCode,
         code: formData.value.verifyCode,
         pass: formData.value.password,
         account: formData.value.phone
@@ -187,6 +198,19 @@ const handleForgetPass = (formRef: FormInstance | null) => {
 
 /* 忘记密码校验 */
 const forgetPassRules = reactive<FormRules>({
+  tenantCode: [
+    {
+      validator: (rule, value, callback) => {
+        const tenantCode = value?.trim()
+        if (!tenantCode) {
+          callback(new Error('租户编码不能为空'))
+        } else {
+          callback()
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
   phone: [
     {
       validator: (rule, value, callback) => {

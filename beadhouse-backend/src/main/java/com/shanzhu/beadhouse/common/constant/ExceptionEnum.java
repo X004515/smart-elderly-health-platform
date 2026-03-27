@@ -19,6 +19,13 @@ public enum ExceptionEnum {
     TOKEN_ERROR(500, "令牌无效"),
     CERTIFICATION_ERROR(500, "认证失败"),
     AUTH_ERROR(500, "权限不足"),
+    TENANT_NOT_EXIST(500, "租户不存在"),
+    TENANT_DISABLED(500, "租户已停用"),
+    TENANT_CODE_REPEAT(500, "租户编码已存在"),
+    TENANT_NAME_REPEAT(500, "租户名称已存在"),
+    TENANT_ADMIN_PHONE_REPEAT(500, "租户管理员手机号已存在"),
+    PLATFORM_ADMIN_NOT_FOUND(500, "平台管理员账号不存在"),
+    PLATFORM_ADMIN_NOT_UNIQUE(500, "平台管理员账号不唯一"),
     // 忘记密码
     ACCOUNT_FORMAT_ERROR(500, "账号格式有误"),
     ACCOUNT_NOT_REGISTER(500, "账号未注册"),

@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 @ApiModel(value = "登录请求实体")
 public class LoginQuery {
+    @ApiModelProperty(value = "租户编码", required = true, example = "default")
+    private String tenantCode;
     @ApiModelProperty(value = "电话",required = true, example = "13545676756")
     private String phone;
     @ApiModelProperty(value = "密码",required = true, example = "123456")

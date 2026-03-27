@@ -4,13 +4,16 @@ import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.shanzhu.beadhouse.common.constant.ExceptionEnum;
 import com.shanzhu.beadhouse.common.constant.YesNoEnum;
+import com.shanzhu.beadhouse.common.config.tenant.TenantContextHolder;
 import com.shanzhu.beadhouse.common.util.AesUtil;
 import com.shanzhu.beadhouse.common.util.AssertUtil;
 import com.shanzhu.beadhouse.common.util.DateUtilWen;
 import com.shanzhu.beadhouse.dao.mapper.StaffMapper;
+import com.shanzhu.beadhouse.dao.mapper.TenantMapper;
 import com.shanzhu.beadhouse.entity.po.Consult;
 import com.shanzhu.beadhouse.entity.po.Contract;
 import com.shanzhu.beadhouse.entity.po.Staff;
+import com.shanzhu.beadhouse.entity.po.Tenant;
 import com.shanzhu.beadhouse.entity.vo.BusinessTrendVo;
 import com.shanzhu.beadhouse.entity.vo.MonthPerformanceRankVo;
 import org.springframework.stereotype.Component;
@@ -27,6 +30,8 @@ public class StaffFunc {
     @Resource
     private StaffMapper staffMapper;
     @Resource
+    private TenantMapper tenantMapper;
+    @Resource
     private ConsultFunc consultFunc;
     @Resource
     private ContractFunc contractFunc;
@@ -37,7 +42,7 @@ public class StaffFunc {
      * @param account
      * @return
      */
-    public Staff getStaffByAccount(String account) {
+    public Staff getStaffByAccount(Long tenantId, String account) {
         return staffMapper.selectOne(new LambdaQueryWrapper<Staff>()
                 .and(staffLambdaQueryWrapper ->
                         staffLambdaQueryWrapper
@@ -48,7 +53,25 @@ public class StaffFunc {
                         staffLambdaQueryWrapper
                                 .eq(Staff::getLeaveFlag, YesNoEnum.NO.getCode())
                 )
+                .eq(Staff::getTenantId, tenantId)
         );
+    }
+
+    /**
+     * 根据当前租户查询账号
+     */
+    public Staff getStaffByAccount(String account) {
+        return getStaffByAccount(TenantContextHolder.getTenantIdOrDefault(), account);
+    }
+
+    /**
+     * 根据租户编码查询账号
+     */
+    public Staff getStaffByAccount(String tenantCode, String account) {
+        Tenant tenant = tenantMapper.selectOne(new LambdaQueryWrapper<Tenant>()
+                .eq(Tenant::getTenantCode, tenantCode));
+        AssertUtil.notNull(tenant, ExceptionEnum.TENANT_NOT_EXIST);
+        return getStaffByAccount(tenant.getId(), account);
     }
 
     /**
@@ -57,9 +80,9 @@ public class StaffFunc {
      * @param account
      * @return
      */
-    public Staff forgetCheckAccountAndPass(String account, String pass) {
+    public Staff forgetCheckAccountAndPass(String tenantCode, String account, String pass) {
         // 获取需修改密码的账号
-        Staff staff = getStaffByAccount(account);
+        Staff staff = getStaffByAccount(tenantCode, account);
         // 账号未注册
         AssertUtil.notNull(staff, ExceptionEnum.ACCOUNT_NOT_REGISTER);
         // 新密码与原密码相同
@@ -77,10 +100,7 @@ public class StaffFunc {
      */
     public List<Staff> listStaffByRoleId(Long roleId) {
         return staffMapper.selectList(new LambdaQueryWrapper<Staff>()
-                .and(staffLambdaQueryWrapper -> staffLambdaQueryWrapper
-                        .eq(Staff::getRoleId, roleId)
-                        .or().eq(Staff::getRoleId, 1L)
-                )
+                .eq(Staff::getRoleId, roleId)
                 .eq(Staff::getLeaveFlag, YesNoEnum.NO.getCode()));
     }
 

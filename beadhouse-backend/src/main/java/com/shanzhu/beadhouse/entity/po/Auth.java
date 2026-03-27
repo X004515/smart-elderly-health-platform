@@ -58,5 +58,9 @@ public class Auth extends BaseEntity {
      */
     private String method;
 
+    /**
+     * 租户编号
+     */
+    private Long tenantId;
 
 }

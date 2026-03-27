@@ -52,6 +52,10 @@ public interface Constant {
     // REDIS
     // 登录存入redis前缀
     String LOGIN_REDIS = "login:";
+    // 验证码存入redis前缀
+    String CODE_REDIS = "code:";
+    // 默认租户编码
+    String DEFAULT_TENANT_CODE = "default";
 
     // FILE
     // 文件

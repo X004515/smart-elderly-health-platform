@@ -14,6 +14,14 @@
           :rules="loginRules"
           size="large"
         >
+          <el-form-item prop="tenantCode">
+            <el-input
+              v-model="formData.tenantCode"
+              placeholder="租户编码"
+              :prefix-icon="useRenderIcon('user', { size: 12 })"
+              clearable
+            />
+          </el-form-item>
           <el-form-item prop="phone">
             <el-input
               v-model="formData.phone"
@@ -89,6 +97,7 @@ const ruleFormRef = ref<FormInstance | null>(null)
 const reImageVerify = ref()
 const rememberPWD = ref(false)
 const formData = ref({
+  tenantCode: 'default',
   phone: '13547584400',
   password: '123456',
   verifyCode: imgCode
@@ -104,6 +113,7 @@ const handleLogin = async (formRef: FormInstance | null) => {
       if (imgCode.value == formData.value.verifyCode) {
         store
           .dispatch('app/actionLogin', {
+            tenantCode: formData.value.tenantCode,
             pass: formData.value.password,
             phone: formData.value.phone,
             rememberPWD: rememberPWD.value
@@ -145,6 +155,19 @@ const handleLogin = async (formRef: FormInstance | null) => {
 
 /* 登录校验 */
 const loginRules = reactive<FormRules>({
+  tenantCode: [
+    {
+      validator: (rule, value, callback) => {
+        const tenantCode = value?.trim()
+        if (!tenantCode) {
+          callback(new Error('租户编码不能为空'))
+        } else {
+          callback()
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
   phone: [
     {
       validator: (rule, value, callback) => {

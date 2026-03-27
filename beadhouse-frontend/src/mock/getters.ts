@@ -3,8 +3,13 @@ import store from '@/store'
 
 // 获取路由列表
 export const getRouterList = (uid: number) => {
-  const authIdList: number[] = store.state.app.userPeofile.authIdList
-  const routeList: any[] = routes.filter(route => authIdList.includes(route.id))
+  const authIdList: number[] = store.state.app.userPeofile.authIdList || []
+  const authUrlList: string[] = store.state.app.userPeofile.authUrlList || []
+  const routeList: any[] = routes.filter(route => {
+    const hitId = authIdList.includes(route.id)
+    const hitUrl = !!route.url && authUrlList.includes(route.url)
+    return hitId || hitUrl
+  })
   if (uid) {
     // userInfo 有可能是 undefined
     const userInfo: IUser | undefined = users.find(user => user.id === uid)

@@ -5,6 +5,7 @@ export interface IRoute {
   path: string
   redirect?: string
   component: string
+  url?: string
   meta: {
     title: string
     icon?: string
@@ -480,6 +481,31 @@ const routes: IRoute[] = [
     name: 'ActivityBase',
     component: 'base/activity/index.vue',
     meta: { title: '活动', icon: '' }
+  },
+  {
+    id: 1001,
+    pid: 0,
+    path: '/platform',
+    name: 'Platform',
+    redirect: '/platform/tenant',
+    component: 'platform/index.vue',
+    url: '/platform',
+    meta: {
+      title: '平台管理',
+      icon: 'base'
+    }
+  },
+  {
+    id: 1002,
+    pid: 1001,
+    path: 'tenant',
+    name: 'TenantPlatform',
+    component: 'base/tenant/index.vue',
+    url: '/platform/tenant',
+    meta: {
+      title: '租户管理',
+      icon: ''
+    }
   }
 ]
 

@@ -109,3 +109,10 @@ ignore:
   tokenUrl:
     - /account/edit
     - /account/logout
+saas:
+  platform:
+    admin:
+      phone: 13547584400
+  tenant-admin:
+    default-pass: 123456
+    template-role-id: 2

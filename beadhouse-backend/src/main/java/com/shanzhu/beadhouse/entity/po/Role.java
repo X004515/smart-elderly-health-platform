@@ -23,5 +23,9 @@ public class Role extends BaseEntity {
      */
     private String name;
 
+    /**
+     * 租户编号
+     */
+    private Long tenantId;
 
 }

@@ -28,5 +28,9 @@ public class RoleAuth extends BaseEntity {
      */
     private Long authId;
 
+    /**
+     * 租户编号
+     */
+    private Long tenantId;
 
 }

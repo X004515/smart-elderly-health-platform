@@ -3,14 +3,17 @@ import { http } from '@/utils'
 interface ILoginForm {
   pass: string
   phone: string
+  tenantCode: string
 }
 
 interface ISendCodeForm {
+  tenantCode: string
   pass: string
   account: string
 }
 
 interface IForgetPass {
+  tenantCode: string
   code: string
   pass: string
   account: string

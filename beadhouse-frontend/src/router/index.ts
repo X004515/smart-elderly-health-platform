@@ -39,6 +39,20 @@ const router = createRouter({
 
 const ROUTER_WHITE_LIST = ['/login']
 
+const resolveFirstRoutePath = (routeTree: any[]): string => {
+  if (!routeTree || routeTree.length === 0) {
+    return '/home'
+  }
+  const walk = (node: any, parentPath = ''): string => {
+    const fullPath = node.path.startsWith('/') ? node.path : `${parentPath}/${node.path}`.replace(/\/+/g, '/')
+    if (node.children && node.children.length > 0) {
+      return walk(node.children[0], fullPath)
+    }
+    return fullPath
+  }
+  return walk(routeTree[0])
+}
+
 router.beforeEach(async (to, from, next) => {
   // 设置页面标题
   document["title"] = to.meta.title + " | 敬老院管理系统"
@@ -53,6 +67,11 @@ router.beforeEach(async (to, from, next) => {
   if (!store.state.app.hasAuth && store.state.app.token) {
     await initRoutes()
     return next({ path: to.path })
+  }
+
+  if ((to.path === '/home' || to.path === '/') && !router.hasRoute('Home')) {
+    const firstPath = resolveFirstRoutePath(store.state.app.routeTree as any[])
+    return next({ path: firstPath, replace: true })
   }
 
   // 7.正常访问页面

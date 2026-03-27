@@ -26,6 +26,7 @@ public class MetaObjectHandlerImpl implements MetaObjectHandler {
     private static final String CREATETIME = "createTime";
     private static final String UPDATEID = "updateId";
     private static final String UPDATETIME = "updateTime";
+    private static final String TENANTID = "tenantId";
 
     /**
      * 自动填充创建时间修改时间
@@ -61,6 +62,16 @@ public class MetaObjectHandlerImpl implements MetaObjectHandler {
         }
         if (list.contains(UPDATETIME)) {
             this.setFieldValByName(UPDATETIME, new Date(), metaObject);
+        }
+        if (list.contains(TENANTID)) {
+            Object tenantIdValue = this.getFieldValByName(TENANTID, metaObject);
+            if (tenantIdValue == null) {
+                if (loginUserInfo != null && loginUserInfo.getTenantId() != null) {
+                    this.setFieldValByName(TENANTID, loginUserInfo.getTenantId(), metaObject);
+                } else {
+                    this.setFieldValByName(TENANTID, 1L, metaObject);
+                }
+            }
         }
     }
 

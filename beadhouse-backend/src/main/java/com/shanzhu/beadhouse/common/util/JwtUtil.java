@@ -3,6 +3,7 @@ package com.shanzhu.beadhouse.common.util;
 import com.shanzhu.beadhouse.common.constant.Constant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -18,8 +19,19 @@ public class JwtUtil {
      * @return jwt
      */
     public static String createJwt(String id) {
+        return createJwt(id, null);
+    }
+
+    /**
+     * 签发token
+     *
+     * @param id       用户id
+     * @param tenantId 租户id
+     * @return jwt
+     */
+    public static String createJwt(String id, Long tenantId) {
         Date signTime = new Date();
-        return Jwts.builder()
+        JwtBuilder builder = Jwts.builder()
                 // 头部
                 .setHeaderParam("type", "JWT")
                 .setHeaderParam("alg", "HS256")
@@ -36,9 +48,11 @@ public class JwtUtil {
                 // 登录用户id
                 .claim("id", id)
                 // 签名哈希
-                .signWith(Keys.hmacShaKeyFor(Constant.TOKEN_SECRET.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
-                // 签名
-                .compact();
+                .signWith(Keys.hmacShaKeyFor(Constant.TOKEN_SECRET.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256);
+        if (tenantId != null) {
+            builder.claim("tenantId", tenantId);
+        }
+        return builder.compact();
     }
 
     /**

@@ -73,5 +73,9 @@ public class Staff extends BaseEntity {
      */
     private String leaveFlag;
 
+    /**
+     * 租户编号
+     */
+    private Long tenantId;
 
 }

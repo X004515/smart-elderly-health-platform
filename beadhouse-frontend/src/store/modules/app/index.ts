@@ -66,7 +66,11 @@ export const store = {
           username: res?.data.name,
           userid: res?.data.id,
           avator: res?.data.avator,
-          authIdList: res?.data.authIdList
+          authIdList: res?.data.authIdList,
+          authUrlList: res?.data.authUrlList || [],
+          tenantId: res?.data.tenantId,
+          tenantCode: res?.data.tenantCode,
+          platformAdmin: res?.data.platformAdmin
         })
       }
       commit('setRememberPWD', data?.rememberPWD)
