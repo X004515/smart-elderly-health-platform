@@ -1,16 +1,20 @@
-// 导航划过阴影
-.navbar-bg-hover {
+﻿.navbar-bg-hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  padding: 12px;
-  transition: all 0.3s;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: all 0.24s ease;
 
   &:hover {
-    background-color: #f6f6f6;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(123, 157, 145, 0.24);
+    box-shadow: 0 12px 28px rgba(67, 95, 86, 0.12);
     cursor: pointer;
-    transition: all 0.3s;
+    transform: translateY(-1px);
   }
 
   .svg-icon {

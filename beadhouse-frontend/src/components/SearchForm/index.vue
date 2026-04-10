@@ -1,11 +1,16 @@
-<template>
-  <MyCard
-    ><div class="card table-search" v-if="columns.length">
-      <el-form ref="formRef" :model="searchParam">
+﻿<template>
+  <MyCard v-if="columns.length" class="search-card">
+    <div class="table-search">
+      <el-form
+        ref="formRef"
+        :model="searchParam"
+        class="search-form"
+        label-position="top"
+      >
         <Grid
           ref="gridRef"
           :collapsed="collapsed"
-          :gap="[20, 0]"
+          :gap="[18, 18]"
           :cols="searchCol"
         >
           <GridItem
@@ -14,14 +19,14 @@
             v-bind="getResponsive(item)"
             :index="index"
           >
-            <el-form-item :label="`${item.label} :`">
+            <el-form-item :label="item.label">
               <SearchFormItem :column="item" :searchParam="searchParam" />
             </el-form-item>
           </GridItem>
           <GridItem suffix>
-            <div class="operation">
+            <div class="operation search-actions">
               <el-button
-                class="bg-blue clickSearchBtn"
+                class="search-action-primary"
                 type="primary"
                 :icon="Search"
                 @click="search"
@@ -32,10 +37,10 @@
               <el-button
                 v-if="showCollapse"
                 link
-                class="search-isOpen"
+                class="search-toggle"
                 @click="collapsed = !collapsed"
               >
-                {{ collapsed ? '展开' : '合并' }}
+                {{ collapsed ? '展开' : '收起' }}
                 <el-icon class="el-icon--right">
                   <component :is="collapsed ? ArrowDown : ArrowUp"></component>
                 </el-icon>
@@ -43,11 +48,12 @@
             </div>
           </GridItem>
         </Grid>
-      </el-form></div
-  ></MyCard>
+      </el-form>
+    </div>
+  </MyCard>
 </template>
 <script setup lang="ts" name="SearchForm">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import { BreakPoint } from '@/components/Grid/interface'
 import { Delete, Search, ArrowDown, ArrowUp } from '@element-plus/icons-vue'
@@ -57,20 +63,18 @@ import GridItem from '@/components/Grid/components/GridItem.vue'
 import MyCard from '../my-card/my-card.vue'
 
 interface ProTableProps {
-  columns?: ColumnProps[] // 搜索配置列
-  searchParam?: { [key: string]: any } // 搜索参数
+  columns?: ColumnProps[]
+  searchParam?: { [key: string]: any }
   searchCol: number | Record<BreakPoint, number>
-  search: (params: any) => void // 搜索方法
-  reset: (params: any) => void // 重置方法
+  search: (params: any) => void
+  reset: (params: any) => void
 }
 
-// 默认值
 const props = withDefaults(defineProps<ProTableProps>(), {
   columns: () => [],
   searchParam: () => ({})
 })
 
-// 获取响应式设置
 const getResponsive = (item: ColumnProps) => {
   return {
     span: item.search?.span,
@@ -83,14 +87,11 @@ const getResponsive = (item: ColumnProps) => {
   }
 }
 
-// 是否默认折叠搜索项
 const collapsed = ref(true)
 
-// 获取响应式断点
 const gridRef = ref()
 const breakPoint = computed<BreakPoint>(() => gridRef.value?.breakPoint)
 
-// 判断是否显示 展开/合并 按钮
 const showCollapse = computed(() => {
   let show = false
   props.columns.reduce((prev, current) => {
@@ -107,3 +108,25 @@ const showCollapse = computed(() => {
   return show
 })
 </script>
+
+<style lang="scss" scoped>
+.search-form :deep(.el-form-item) {
+  margin-bottom: 0;
+}
+
+.search-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 28px;
+}
+
+.search-actions :deep(.el-button + .el-button) {
+  margin-left: 0;
+}
+
+.search-toggle {
+  min-height: 40px;
+}
+</style>

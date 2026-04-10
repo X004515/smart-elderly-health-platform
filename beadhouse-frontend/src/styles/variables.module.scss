@@ -1,16 +1,16 @@
-// sidebar
-$menuText: #fefefea6;
+﻿// sidebar
+$menuText: rgba(245, 248, 246, 0.78);
 $menuActiveText: #fff;
 
-$menuBg: #031429;
-$menuActiveBg: #558df6;
-$menuHover: #558df6;
+$menuBg: #243b37;
+$menuActiveBg: rgba(122, 198, 176, 0.2);
+$menuHover: rgba(255, 255, 255, 0.1);
 
-$subMenuBg: #0e0303;
-$subHideMenuBg: #00061a;
+$subMenuBg: rgba(16, 30, 28, 0.34);
+$subHideMenuBg: rgba(16, 30, 28, 0.88);
 
-$sideBarWidth: 210px;
-$hideSideBarWidth: 54px;
+$sideBarWidth: 248px;
+$hideSideBarWidth: 88px;
 
 :export {
   menuText: $menuText;

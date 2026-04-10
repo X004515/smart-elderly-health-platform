@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkgeracomium_admin_web"]=self["webpackChunkgeracomium_admin_web"]||[]).push([[4067],{4067:function(e,n,r){r.r(n),r.d(n,{default:function(){return o}});var u=r(3396);function t(e,n){const r=(0,u.up)("router-view");return(0,u.wg)(),(0,u.j4)(r)}var a=r(89);const c={},i=(0,a.Z)(c,[["render",t]]);var o=i}}]);
+//# sourceMappingURL=4067.33dd6dae.js.map

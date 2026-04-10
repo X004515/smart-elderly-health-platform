@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <el-dropdown trigger="click">
     <span class="navbar-bg-hover">
       <img :src="avator" />
@@ -90,7 +90,7 @@
 import store from '@/store'
 import { useRenderIcon } from '@/hooks/useIcons'
 import { reactive, ref } from 'vue'
-import { editPass, forgetPass, getLogout, IEditPassImpl } from '@/apis/user'
+import { editPass, getLogout, IEditPassImpl } from '@/apis/user'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 
 const avator = store.state.app.userPeofile.avator
@@ -104,22 +104,16 @@ const formData = ref({
   confirmPassword: '123456'
 })
 
-// 修改密码模态框显示
 const editPassShow = () => {
   editPassVisible.value = true
 }
 
-// 修改密码
 const handleEditPass = (formRef: FormInstance | null) => {
   loading.value = true
 
   if (!formRef) return
   formRef.validate(async (valid, fields) => {
     if (valid) {
-      // const res: any = await editPass({
-      //   oldPass: formData.value.oldPass,
-      //   newPass: formData.value.newPass
-      // })
       const res: any = await editPass(new IEditPassImpl('1', '1'))
       if (res.code === 200) {
         logout()
@@ -137,7 +131,6 @@ const handleEditPass = (formRef: FormInstance | null) => {
   })
 }
 
-// 退出登录
 const logout = async () => {
   await getLogout()
   store.dispatch('app/logout')
@@ -147,7 +140,6 @@ const logout = async () => {
   })
 }
 
-/* 修改密码校验 */
 const editPassRules = reactive<FormRules>({
   oldPass: [
     {
@@ -196,11 +188,17 @@ const editPassRules = reactive<FormRules>({
 
 <style lang="scss" scoped>
 .navbar-bg-hover {
+  color: var(--app-text);
+
   img {
+    width: 34px;
+    height: 34px;
+    margin-right: 2px;
+    padding: 2px;
+    border: 1px solid rgba(123, 157, 145, 0.24);
     border-radius: 50%;
-    height: 22px;
-    width: 22px;
-    margin-right: 10px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 24px rgba(67, 95, 86, 0.12);
   }
 }
 </style>

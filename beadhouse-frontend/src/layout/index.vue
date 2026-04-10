@@ -1,22 +1,27 @@
-<template>
+﻿<template>
   <el-container
     class="layout-container"
     :class="{ hideSidebar: !$store.state.app.siderType }"
   >
-    <el-aside :width="$store.state.app.siderType ? '230px' : '64px'">
+    <el-aside
+      class="app-sidebar"
+      :width="$store.state.app.siderType ? '248px' : '88px'"
+    >
       <SideBar />
     </el-aside>
     <el-container class="main-container">
-      <el-header>
+      <el-header class="app-header">
         <NavBar />
       </el-header>
-      <el-main>
-        <el-scrollbar>
-          <router-view v-slot="{ Component }">
-            <transition name="fade-transform" mode="out-in">
-              <component :is="Component" />
-            </transition>
-          </router-view>
+      <el-main class="app-main">
+        <el-scrollbar class="main-scrollbar">
+          <div class="page-shell">
+            <router-view v-slot="{ Component }">
+              <transition name="fade-transform" mode="out-in">
+                <component :is="Component" />
+              </transition>
+            </router-view>
+          </div>
         </el-scrollbar>
       </el-main>
     </el-container>
@@ -26,23 +31,17 @@
 <script setup lang="ts">
 import SideBar from './components/SideBar/index.vue'
 import NavBar from './components/NavBar/index.vue'
-import store from '@/store'
 
 // window.onresize = () =>
 //   (() => {
-//     /** width app-wrapper类容器宽度
-//      * 0 < width <= 760 隐藏侧边栏
-//      * 760 < width <= 990 折叠侧边栏
-//      * width > 990 展开侧边栏
-//      */
-
+//     /** width app-wrapper */
 //     let width = document.body.clientWidth
-
-//     if (width > 0 && width <= 760) { // 隐藏侧边栏
+//
+//     if (width > 0 && width <= 760) {
 //       store.commit('app/setDeviceType', 'phone')
-//     } else if (width > 760 && width <= 990) { // 折叠侧边栏
+//     } else if (width > 760 && width <= 990) {
 //       store.commit('app/setDeviceType', 'ipaid')
-//     } else if (width > 990) { // 展开侧边栏
+//     } else if (width > 990) {
 //       store.commit('app/setDeviceType', 'desktop')
 //     }
 //   })()
@@ -53,23 +52,32 @@ import store from '@/store'
   position: relative;
   width: 100%;
   height: 100%;
+  background: transparent;
 }
 
-// 消除导航栏内边距
-.el-header {
+.app-sidebar {
   position: relative;
-  padding: 0 !important;
-  height: 48px !important;
+  z-index: 3;
 }
 
-// 消除主内容内边距
-.el-main {
+.app-header {
+  position: relative;
+  height: 88px !important;
   padding: 0 !important;
-  background-color: #f0f2f5;
+  background: transparent;
 }
 
-.el-scrollbar {
-  background-color: rgb(246, 246, 246) !important;
-  padding: 10px;
+.app-main {
+  padding: 0 !important;
+  background: transparent;
+}
+
+.main-scrollbar {
+  height: 100%;
+}
+
+.page-shell {
+  min-height: 100%;
+  padding: 10px clamp(18px, 2.4vw, 36px) 36px;
 }
 </style>

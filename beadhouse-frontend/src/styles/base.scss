@@ -1,0 +1,360 @@
+:root {
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Noto Sans SC", sans-serif;
+  --font-display: "STZhongsong", "Songti SC", "Noto Serif SC", serif;
+
+  --app-bg: oklch(0.975 0.012 95);
+  --app-bg-soft: oklch(0.955 0.014 115);
+  --app-surface: oklch(0.992 0.006 90);
+  --app-surface-soft: oklch(0.975 0.012 92);
+  --app-surface-strong: oklch(0.945 0.02 110);
+  --app-border: oklch(0.9 0.012 100);
+  --app-border-strong: oklch(0.82 0.02 105);
+  --app-text: oklch(0.31 0.028 220);
+  --app-text-soft: oklch(0.48 0.018 210);
+  --app-text-muted: oklch(0.58 0.014 205);
+  --app-primary: oklch(0.65 0.11 170);
+  --app-primary-strong: oklch(0.57 0.12 173);
+  --app-secondary: oklch(0.78 0.08 78);
+  --app-accent: oklch(0.74 0.075 48);
+  --app-danger: oklch(0.67 0.14 25);
+  --app-shadow-sm: 0 10px 24px rgba(52, 74, 66, 0.08);
+  --app-shadow-md: 0 24px 60px rgba(52, 74, 66, 0.12);
+  --app-shadow-lg: 0 32px 80px rgba(36, 54, 48, 0.18);
+
+  --el-color-primary: var(--app-primary);
+  --el-color-primary-light-3: color-mix(in oklab, var(--app-primary) 72%, white);
+  --el-color-primary-light-5: color-mix(in oklab, var(--app-primary) 56%, white);
+  --el-color-primary-light-7: color-mix(in oklab, var(--app-primary) 40%, white);
+  --el-color-primary-light-8: color-mix(in oklab, var(--app-primary) 28%, white);
+  --el-color-primary-light-9: color-mix(in oklab, var(--app-primary) 14%, white);
+  --el-color-primary-dark-2: var(--app-primary-strong);
+  --el-color-success: oklch(0.69 0.1 152);
+  --el-color-warning: oklch(0.79 0.11 80);
+  --el-color-danger: var(--app-danger);
+  --el-color-info: oklch(0.7 0.022 220);
+  --el-bg-color: var(--app-surface);
+  --el-bg-color-page: transparent;
+  --el-bg-color-overlay: var(--app-surface);
+  --el-text-color-primary: var(--app-text);
+  --el-text-color-regular: var(--app-text-soft);
+  --el-text-color-secondary: var(--app-text-muted);
+  --el-border-color: var(--app-border);
+  --el-border-color-light: color-mix(in oklab, var(--app-border) 64%, white);
+  --el-border-color-lighter: color-mix(in oklab, var(--app-border) 42%, white);
+  --el-border-radius-base: 16px;
+  --el-border-radius-small: 12px;
+  --el-border-radius-round: 999px;
+  --el-fill-color-light: var(--app-surface-soft);
+  --el-fill-color-blank: transparent;
+  --el-box-shadow-light: var(--app-shadow-sm);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--app-text);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  background:
+    radial-gradient(circle at top left, rgba(126, 184, 161, 0.22), transparent 28%),
+    radial-gradient(circle at right 18% top 10%, rgba(226, 191, 135, 0.16), transparent 22%),
+    linear-gradient(180deg, var(--app-bg-soft) 0%, var(--app-bg) 42%, oklch(0.985 0.007 96) 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#app {
+  isolation: isolate;
+}
+
+.app-page,
+.table-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.table-box {
+  width: 100%;
+}
+
+.page-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid rgba(132, 163, 151, 0.18);
+  border-radius: 32px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(245, 248, 244, 0.96)),
+    radial-gradient(circle at top right, rgba(120, 184, 162, 0.12), transparent 34%);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.page-intro-copy {
+  max-width: 70ch;
+}
+
+.page-intro-kicker {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--app-primary-strong);
+}
+
+.page-intro h1,
+.page-intro-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3.2rem);
+  line-height: 1.06;
+  color: var(--app-text);
+}
+
+.page-intro p,
+.page-intro-description {
+  max-width: 62ch;
+  margin: 12px 0 0;
+  line-height: 1.7;
+  color: var(--app-text-soft);
+}
+
+.page-intro-aside {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.soft-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid rgba(112, 150, 138, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--app-text-soft);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.dashboard-span-12 {
+  grid-column: span 12;
+}
+
+.dashboard-span-8 {
+  grid-column: span 8;
+}
+
+.dashboard-span-6 {
+  grid-column: span 6;
+}
+
+.dashboard-span-4 {
+  grid-column: span 4;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.metric-grid--compact {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 148px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 248, 0.96));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.metric-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -18px -22px auto;
+  width: 90px;
+  height: 90px;
+  border-radius: 999px;
+  opacity: 0.2;
+  background: currentColor;
+  filter: blur(8px);
+}
+
+.metric-card.is-primary {
+  color: oklch(0.54 0.11 170);
+  background: linear-gradient(180deg, rgba(239, 250, 247, 0.92), rgba(248, 251, 249, 0.98));
+}
+
+.metric-card.is-secondary {
+  color: oklch(0.68 0.078 78);
+  background: linear-gradient(180deg, rgba(255, 248, 235, 0.94), rgba(251, 248, 242, 0.98));
+}
+
+.metric-card.is-accent {
+  color: oklch(0.66 0.09 42);
+  background: linear-gradient(180deg, rgba(255, 243, 238, 0.94), rgba(251, 247, 244, 0.98));
+}
+
+.metric-card.is-deep {
+  color: oklch(0.49 0.04 225);
+  background: linear-gradient(180deg, rgba(236, 242, 245, 0.96), rgba(247, 249, 250, 0.98));
+}
+
+.metric-label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--app-text-soft);
+}
+
+.metric-value {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2vw, 2.5rem);
+  line-height: 1;
+  color: var(--app-text);
+}
+
+.metric-note {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  font-size: 0.88rem;
+  color: var(--app-text-muted);
+}
+
+.stat-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.stat-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 130px;
+  padding: 18px 18px 20px;
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 247, 0.94));
+}
+
+.data-caption {
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--app-text-muted);
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2vw, 2.6rem);
+  line-height: 1;
+  color: var(--app-text);
+}
+
+.data-subvalue {
+  font-size: 0.96rem;
+  color: var(--app-text-soft);
+}
+
+.table-empty {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  color: var(--app-text-muted);
+  border-radius: 20px;
+  background: var(--app-surface-soft);
+}
+
+.chart-shell {
+  min-height: 340px;
+}
+
+.large-card-font {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.2vw, 2.5rem);
+  line-height: 1;
+  color: var(--app-text);
+}
+
+@media (max-width: 1280px) {
+  .dashboard-span-8,
+  .dashboard-span-6,
+  .dashboard-span-4 {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 900px) {
+  .page-intro {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px;
+    border-radius: 26px;
+  }
+
+  .page-intro-aside {
+    justify-content: flex-start;
+  }
+
+  .stat-pair {
+    grid-template-columns: 1fr;
+  }
+}

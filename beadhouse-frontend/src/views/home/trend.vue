@@ -1,67 +1,113 @@
-<template>
-  <myCard title="业务趋势" class="w-full">
-    <div
-      id="myEcharts"
-      style="width: 1000px; height: 333px"
-      ref="Echarts"
-      class="w-full"
-    ></div>
+﻿<template>
+  <myCard title="业务趋势">
+    <div ref="chartRef" class="chart-shell"></div>
   </myCard>
 </template>
 
 <script lang="ts" setup>
 import * as echarts from 'echarts'
-import { onMounted, onUnmounted, ref } from 'vue'
+import type { ECharts, EChartsOption } from 'echarts'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { getBusinessTrend } from '@/apis/home'
-let myEcharts = echarts
-let trendData = ref<any[]>([])
-let Echarts = ref()
+
+const trendData = ref<any[]>([])
+const chartRef = ref<HTMLElement | null>(null)
+let chart: ECharts | null = null
+
+const resizeChart = () => {
+  chart?.resize()
+}
+
+const buildOption = (): EChartsOption => ({
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: 'rgba(32, 47, 44, 0.92)',
+    borderWidth: 0,
+    textStyle: {
+      color: '#f7fbf9'
+    }
+  },
+  grid: {
+    left: 24,
+    right: 24,
+    top: 20,
+    bottom: 26,
+    containLabel: true
+  },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: trendData.value.map((item: any) => item.month),
+    axisLine: {
+      lineStyle: {
+        color: 'rgba(114, 140, 130, 0.26)'
+      }
+    },
+    axisLabel: {
+      color: '#6d8279'
+    }
+  },
+  yAxis: {
+    type: 'value',
+    splitLine: {
+      lineStyle: {
+        color: 'rgba(114, 140, 130, 0.14)'
+      }
+    },
+    axisLabel: {
+      color: '#6d8279'
+    }
+  },
+  series: [
+    {
+      data: trendData.value.map((item: any) => item.consultNum),
+      type: 'line',
+      smooth: true,
+      symbol: 'circle',
+      symbolSize: 8,
+      lineStyle: {
+        width: 3,
+        color: '#69a993'
+      },
+      itemStyle: {
+        color: '#69a993',
+        borderColor: '#ffffff',
+        borderWidth: 2
+      },
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: 'rgba(105, 169, 147, 0.26)' },
+          { offset: 1, color: 'rgba(105, 169, 147, 0.03)' }
+        ])
+      }
+    }
+  ]
+})
+
+const renderChart = () => {
+  if (!chartRef.value) return
+  if (!chart) {
+    chart = echarts.init(chartRef.value)
+  }
+  chart.setOption(buildOption())
+}
+
 onMounted(async () => {
   const data: any = await getBusinessTrend()
   if (data.code === 200 && data.data) {
     trendData.value = data.data
   }
-  initChart()
+  renderChart()
+  window.addEventListener('resize', resizeChart)
+})
+
+watch(trendData, () => {
+  renderChart()
 })
 
 onUnmounted(() => {
-  myEcharts.dispose
+  window.removeEventListener('resize', resizeChart)
+  chart?.dispose()
+  chart = null
 })
-
-function initChart() {
-  let chart = myEcharts.init(Echarts.value, 'purple-passion')
-  chart.setOption({
-    xAxis: {
-      type: 'category',
-      data: trendData.value.map((item: any) => item.month)
-    },
-    tooltip: {
-      trigger: 'axis'
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        data: trendData.value.map((item: any) => item.consultNum),
-        type: 'line',
-        smooth: true,
-        label: {
-          show: true,
-          position: 'top',
-          formatter: '{c}'
-        }
-      }
-    ]
-  })
-  window.onresize = function () {
-    chart.resize()
-  }
-}
 </script>
-
-<style lang="scss" scoped>
-#myEcharts {
-  width: 100% !important;
-}
-</style>

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="container">
     <el-tooltip effect="light" :content="content" placement="right">
       <svg-icon
@@ -31,8 +31,8 @@ const changeSiderType = () => {
 
 <style lang="scss" scoped>
 .svg-icon {
-  color: var(--el-color-primary);
-  margin: 0 0 4px 16px !important;
+  color: rgba(246, 251, 249, 0.88);
+  margin: 0 0 4px 18px !important;
   vertical-align: middle;
   outline: none;
   transition-duration: 0.36s;

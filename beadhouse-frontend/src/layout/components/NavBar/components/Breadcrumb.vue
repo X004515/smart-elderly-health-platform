@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <el-breadcrumb class="breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item
@@ -17,12 +17,10 @@ import { watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { RouteRecordRaw } from 'vue-router'
 const route = useRoute()
-// 获取当前路由完整路由表
 
 const breadcrumbList = ref<RouteRecordRaw[]>([])
 
 const initBreadcrumbList = () => {
-  // 过滤layout路由
   breadcrumbList.value = route.matched.slice(1)
 }
 
@@ -39,6 +37,7 @@ watch(
 .el-breadcrumb {
   display: flex;
   align-items: center;
-  margin-left: 10px;
+  min-width: 0;
+  margin-left: 0;
 }
 </style>

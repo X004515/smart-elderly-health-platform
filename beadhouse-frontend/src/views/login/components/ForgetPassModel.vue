@@ -1,102 +1,85 @@
-<template>
-  <div class="container789">
-    <div style="width: 28%; display: flex;background-color: white; border-radius: 10px;">
-      <div style="flex: 1;width: 100%;padding: 40px;display: flex;flex-direction: column;justify-content: center;" >
-        <div style="text-align: center; font-size: 20px; margin-bottom: 20px; color: #333">敬老院管理系统</div>
-
-        <el-form
-          :model="formData"
-          class="forget-pass-form"
-          ref="ruleFormRef"
-          :rules="forgetPassRules"
-          size="large"
-        >
-          <el-form-item prop="tenantCode">
-            <el-input
-              v-model="formData.tenantCode"
-              placeholder="租户编码"
-              :prefix-icon="useRenderIcon('user', { size: 12 })"
-              clearable
-            />
-          </el-form-item>
-          <el-form-item prop="phone">
-            <el-input
-              v-model="formData.phone"
-              placeholder="账号"
-              :prefix-icon="useRenderIcon('user', { size: 12 })"
-              clearable
-            />
-          </el-form-item>
-
-          <el-form-item prop="password">
-            <el-input
-              v-model="formData.password"
-              placeholder="新密码"
-              type="password"
-              :prefix-icon="useRenderIcon('password', { size: 12 })"
-              clearable
-              show-password
-            />
-          </el-form-item>
-
-          <el-form-item prop="confirmPassword">
-            <el-input
-              v-model="formData.confirmPassword"
-              placeholder="确认密码"
-              type="password"
-              :prefix-icon="useRenderIcon('password', { size: 12 })"
-              clearable
-              show-password
-            />
-          </el-form-item>
-
-          <el-form-item prop="verifyCode">
-            <el-input
-              v-model="formData.verifyCode"
-              placeholder="验证码"
-              :prefix-icon="useRenderIcon('verify')"
-              clearable
-            >
-              <template v-slot:append>
-                <el-button
-                  @click="sendCodeHandle"
-                  :disabled="SEND_code_FLAG"
-                  style="margin: 0 5px"
-                >
-                  {{ SEND_CODE }}
-                </el-button>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <div class="password-set">
-              <el-button
-                id="returnLogin"
-                link
-                @click="$emit('returnLoginHandle')"
-              >
-                返回登录
-              </el-button>
-            </div>
-            <el-button
-              class="bg-blue"
-              size="default"
-              type="primary"
-              style="width: 100%"
-              @click="handleForgetPass(ruleFormRef)"
-              :loading="loading"
-            >忘记密码
-            </el-button>
-          </el-form-item>
-        </el-form>
-
-
-      </div>
+﻿<template>
+  <div class="auth-card auth-card--compact">
+    <div class="auth-header">
+      <p class="auth-kicker">账号找回</p>
+      <h2>重置密码</h2>
+      <p>通过租户、账号和验证码完成密码重置，然后返回登录页继续使用系统。</p>
     </div>
 
+    <el-form
+      :model="formData"
+      class="forget-pass-form"
+      ref="ruleFormRef"
+      :rules="forgetPassRules"
+      size="large"
+    >
+      <el-form-item prop="tenantCode">
+        <el-input
+          v-model="formData.tenantCode"
+          placeholder="租户编码"
+          :prefix-icon="useRenderIcon('user', { size: 12 })"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item prop="phone">
+        <el-input
+          v-model="formData.phone"
+          placeholder="账号"
+          :prefix-icon="useRenderIcon('user', { size: 12 })"
+          clearable
+        />
+      </el-form-item>
 
+      <el-form-item prop="password">
+        <el-input
+          v-model="formData.password"
+          placeholder="新密码"
+          type="password"
+          :prefix-icon="useRenderIcon('password', { size: 12 })"
+          clearable
+          show-password
+        />
+      </el-form-item>
 
+      <el-form-item prop="confirmPassword">
+        <el-input
+          v-model="formData.confirmPassword"
+          placeholder="确认密码"
+          type="password"
+          :prefix-icon="useRenderIcon('password', { size: 12 })"
+          clearable
+          show-password
+        />
+      </el-form-item>
 
+      <el-form-item prop="verifyCode">
+        <el-input
+          v-model="formData.verifyCode"
+          placeholder="验证码"
+          :prefix-icon="useRenderIcon('verify')"
+          clearable
+        >
+          <template #append>
+            <el-button @click="sendCodeHandle" :disabled="SEND_code_FLAG">
+              {{ SEND_CODE }}
+            </el-button>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item class="auth-actions">
+        <div class="password-set">
+          <el-button link @click="emit('returnLoginHandle')">返回登录</el-button>
+        </div>
+        <el-button
+          class="auth-submit"
+          type="primary"
+          @click="handleForgetPass(ruleFormRef)"
+          :loading="loading"
+        >
+          重置密码
+        </el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -106,6 +89,10 @@ import { useRenderIcon } from '@/hooks/useIcons'
 import { FormInstance, FormRules, ElMessage } from 'element-plus'
 import { isNotAccount } from '@/utils/is'
 import { forgetPass, sendCode } from '@/apis/user'
+
+const emit = defineEmits<{
+  (e: 'returnLoginHandle'): void
+}>()
 
 const ruleFormRef = ref<FormInstance | null>(null)
 const formData = ref({
@@ -119,11 +106,9 @@ let SEND_CODE = ref('发送验证码')
 let SEND_code_FLAG = ref(false)
 const loading = ref(false)
 
-// 处理发送验证码
 const sendCodeHandle = async () => {
   const account = formData.value.phone.trim()
   const pass = formData.value.password.trim()
-  // 验证是否能发送验证码
   if (!account || !pass) {
     ElMessage({
       message: '账号和密码不能为空',
@@ -131,28 +116,22 @@ const sendCodeHandle = async () => {
     })
     return
   }
-  // 发送验证码
   const res: any = await sendCode({
     tenantCode: formData.value.tenantCode,
     account: formData.value.phone,
     pass: formData.value.password
   })
   if (res.code === 200) {
-    // 验证码不为空则填入输入框
     if (res.data !== null) {
       formData.value.verifyCode = res.data
     }
-    // 禁用按钮
     SEND_code_FLAG.value = true
-    // 倒计时
     let time = 60
     const timmer = setInterval(() => {
       SEND_CODE.value = '重新发送(' + time-- + ')'
       if (!time) {
-        // 清除定时器
         clearInterval(timmer)
         SEND_CODE.value = '发送验证码'
-        // 启用按钮
         SEND_code_FLAG.value = false
       }
     }, 1000)
@@ -165,8 +144,8 @@ const sendCodeHandle = async () => {
 }
 
 const handleForgetPass = (formRef: FormInstance | null) => {
-  loading.value = true
   if (!formRef) return
+  loading.value = true
   formRef.validate(async (valid, fields) => {
     if (valid) {
       const res: any = await forgetPass({
@@ -176,8 +155,7 @@ const handleForgetPass = (formRef: FormInstance | null) => {
         account: formData.value.phone
       })
       if (res.code === 200) {
-        const returnLogin: any = document.getElementById('returnLogin')
-        returnLogin.click()
+        emit('returnLoginHandle')
         ElMessage({
           message: res.msg,
           type: 'success'
@@ -196,7 +174,6 @@ const handleForgetPass = (formRef: FormInstance | null) => {
   })
 }
 
-/* 忘记密码校验 */
 const forgetPassRules = reactive<FormRules>({
   tenantCode: [
     {
@@ -272,19 +249,60 @@ const forgetPassRules = reactive<FormRules>({
 </script>
 
 <style scoped>
-::v-deep .el-input-group__append {
+:deep(.el-input-group__append) {
   padding: 0;
 }
 
+.auth-card {
+  padding: 32px;
+  border: 1px solid rgba(132, 163, 151, 0.16);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 60px rgba(68, 94, 86, 0.12);
+  backdrop-filter: blur(18px);
+}
 
-.container789{
-  height: 100vh;
-  overflow: hidden;
-  background-color: #2A60C9;
-  background-size: 100%;
+.auth-card--compact {
+  padding-top: 30px;
+}
+
+.auth-header {
+  margin-bottom: 26px;
+}
+
+.auth-kicker {
+  margin: 0 0 10px;
+  color: var(--app-primary-strong);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.auth-header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--app-text);
+}
+
+.auth-header p {
+  margin: 10px 0 0;
+  line-height: 1.8;
+  color: var(--app-text-soft);
+}
+
+.auth-actions {
+  margin-bottom: 0;
+}
+
+.password-set {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.auth-submit {
+  width: 100%;
 }
 </style>

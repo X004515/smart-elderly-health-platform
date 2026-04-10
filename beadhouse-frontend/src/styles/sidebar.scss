@@ -1,4 +1,4 @@
-.main-container {
+﻿.main-container {
   width: calc(100% - $sideBarWidth);
   height: 100%;
   position: fixed;
@@ -8,7 +8,6 @@
   transition: all 0.28s;
 }
 
-// 重写菜单样式
 .sidebar-container {
   transition: all 0.3s;
   width: $sideBarWidth !important;
@@ -18,7 +17,23 @@
   bottom: 0;
   left: 0;
   z-index: 1001;
-  background-color: $menuBg;
+  padding: 14px;
+  background:
+    radial-gradient(circle at top right, rgba(134, 210, 187, 0.18), transparent 28%),
+    linear-gradient(180deg, rgba(40, 64, 59, 0.98), rgba(30, 49, 46, 0.98));
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 30px 0 70px rgba(22, 35, 33, 0.2);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12px 12px auto;
+    height: 160px;
+    border-radius: 28px;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 55%);
+    pointer-events: none;
+  }
 
   .scrollbar-wrapper {
     overflow-x: hidden !important;
@@ -29,14 +44,15 @@
   }
 
   .el-scrollbar {
-    height: calc(100% - 92px);
+    height: calc(100% - 168px);
+    padding-right: 4px;
   }
 
   &.has-logo {
     .el-scrollbar.pc {
-      /* logo: 48px、leftCollapse: 40px、leftCollapse-shadow: 4px */
-      height: calc(100% - 92px);
+      height: calc(100% - 168px);
     }
+
     .el-scrollbar.mobile {
       height: 100%;
     }
@@ -47,11 +63,10 @@
   }
 
   a {
-    display: inline-block;
     display: flex;
-    padding-left: 10px;
     flex-wrap: wrap;
     width: 100%;
+    padding-left: 0;
   }
 
   .el-menu {
@@ -62,13 +77,17 @@
 
   .el-menu-item,
   .el-sub-menu__title {
-    height: 50px;
+    height: 48px;
+    margin-bottom: 6px;
+    padding-left: 16px !important;
+    border-radius: 18px;
     color: $menuText;
     background-color: transparent !important;
-    padding-left: 18px !important;
+    transition: all 0.24s ease;
 
     &:hover {
       color: $menuActiveText !important;
+      background-color: rgba(255, 255, 255, 0.08) !important;
 
       .svg-icon {
         color: $menuActiveText;
@@ -77,55 +96,50 @@
     }
 
     .svg-icon {
+      min-width: 1em;
+      margin-right: 10px;
       color: $menuText;
       transition: color 0.3s;
     }
 
     div,
     span {
-      height: 50px;
-      line-height: 50px;
+      height: 48px;
+      line-height: 48px;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-    .svg-icon {
-      min-width: 1em;
-      margin-right: 5px;
     }
   }
 
   .submenu-title-noDropdown,
   .el-sub-menu__title {
     &:hover {
-      background-color: transparent;
+      background-color: rgba(255, 255, 255, 0.08);
     }
   }
 
-  // 子级选中父级也跟着亮
   .is-active > .el-sub-menu__title,
-  .is-active.submenu-title-noDropdown {
+  .is-active.submenu-title-noDropdown,
+  .is-active {
     color: $menuActiveText !important;
+    background: $menuActiveBg !important;
+    box-shadow: inset 0 0 0 1px rgba(171, 226, 209, 0.18);
 
     i {
       color: $menuActiveText !important;
     }
-  }
-
-  .is-active {
-    transition: color 0.3s;
-    color: $menuActiveText !important;
 
     .svg-icon {
       color: $menuActiveText;
-      transition: color 0.3s;
     }
   }
 
-  // 子级菜单样式
   .el-menu .el-sub-menu .el-menu-item {
-    font-size: 12px;
     min-width: 100px !important;
+    margin-left: 12px;
+    padding-left: 18px !important;
+    border-radius: 14px;
+    font-size: 13px;
     background-color: $subMenuBg !important;
 
     &.is-active {
@@ -136,100 +150,70 @@
 
   .el-menu .el-menu-item {
     .el-menu-tooltip__trigger {
-      padding: 18px;
-    }
-    &.is-active {
-      background: $menuActiveBg !important;
+      padding: 16px;
     }
   }
 }
 
-// 菜单栏折叠时的宽度
 .el-menu--collapse {
   width: $hideSideBarWidth;
 }
 
-// 折叠菜单时的样式
 .hideSidebar {
-  // 菜单栏容器
   .sidebar-container {
-    transition: width 0.3s;
     width: $hideSideBarWidth !important;
+    padding-inline: 12px;
 
-    .el-sub-menu {
-      &.is-active {
-        transition: all 0.28s;
-        color: $menuActiveText !important;
-        position: relative;
-
-        &::after {
-          content: '';
-          height: 50px;
-          left: 2px;
-          position: absolute;
-          top: 0;
-          transition-delay: 0.28s !important;
-          width: 2px;
-          background-color: var(--el-color-primary) !important;
-          opacity: 1;
-        }
-
-        .svg-icon {
-          color: $menuActiveText;
-          transition: color 0.3s;
-        }
-      }
-    }
-    // 可折叠菜单
     .el-sub-menu__title {
-      padding: 18px;
+      padding: 14px !important;
     }
 
-    // 不可折叠菜单
     .el-menu-item {
       .el-menu-tooltip__trigger {
-        padding: 18px;
+        padding: 14px;
       }
     }
   }
 
-  // 菜单的最外层
   .el-menu--vertical {
     width: $hideSideBarWidth !important;
     transition: width 0.3s;
   }
 
-  // 主要内容
   .main-container {
     width: calc(100% - $hideSideBarWidth);
   }
 }
 
-// 展开时的菜单
 .el-menu--vertical {
   width: $sideBarWidth !important;
   transition: width 0.3s;
-  /* 子菜单中还有子菜单 */
+
   .el-menu .el-sub-menu__title {
-    font-size: 12px;
+    font-size: 13px;
     background-color: $subMenuBg !important;
   }
 }
 
-// 折叠时的菜单
 .el-menu--popup-container {
   .el-menu {
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
     background-color: $subMenuBg !important;
+    box-shadow: var(--app-shadow-md);
   }
 
   .el-menu-item,
   .el-sub-menu__title {
-    height: 50px;
+    height: 46px;
+    border-radius: 14px;
     color: $menuText;
     background-color: transparent !important;
 
     &:hover {
       color: $menuActiveText !important;
+      background-color: rgba(255, 255, 255, 0.08) !important;
 
       .svg-icon {
         color: $menuActiveText;
@@ -244,8 +228,8 @@
 
     div,
     span {
-      height: 50px;
-      line-height: 50px;
+      height: 46px;
+      line-height: 46px;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -254,7 +238,7 @@
   .submenu-title-noDropdown,
   .el-sub-menu__title {
     &:hover {
-      background-color: transparent;
+      background-color: rgba(255, 255, 255, 0.08) !important;
     }
   }
 
@@ -268,29 +252,17 @@
   }
 
   .el-menu .el-menu-item {
-    font-size: 12px !important;
     min-width: 100px !important;
+    font-size: 12px !important;
     background-color: $subMenuBg !important;
 
     &.is-active {
-      background: $menuHover !important;
-    }
-  }
-
-  .el-menu .el-menu-item {
-    &.is-active {
-      background: $menuHover !important;
+      background: $menuActiveBg !important;
     }
   }
 }
 
-// 修复折叠后闪烁的bug
 .is-active {
-  &::after {
-    content: '';
-    opacity: 1 !important;
-  }
-
   .menu-icon {
     transition: none !important;
     color: #fff !important;
